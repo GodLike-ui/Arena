@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ArenA.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/assets/icon64.png">
+  <meta property="og:title" content="ArenA.io">
+  <meta property="og:image" content="/assets/icon1200.png">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58664433-3"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-58664433-3');
+  </script>
+</head>
+
+<body>
+  <div id="stats">
+    <h1 style="font-size: 30px;" class="ubuntufontsmall" id="PlayerName">PlayerName</h1>
+    <img src="https://clipground.com/images/white-square-png-1.jpg" alt="My Image" width="120" height="120">
+  </div>
+  <div id="loginBtn" class="loginBtn ubuntufontsmall">
+    <h1>Login</h1>
+  </div>
+  <div id="loginMenu" class="loginScreen"> 
+    <div id="loginBox">
+      <div id=closeLogin></div>
+      <h2 id="loginBtn" style="text-align: center;" class="ubuntufontsmall">Login</h2>
+      <div class="input-wrapper">
+        <form action="" id="login-form">
+          <div class="form-group">
+            <label class="Ubuntu" for="username">Username:</label>
+            <br>
+            <input type="text" id="lusername" name="username">
+          </div>
+          <div class="form-group">
+            <label class="Ubuntu" for="password">Password:</label>
+            <br>
+            <input type="password" id="lpassword" name="password">
+          </div>
+        </form>
+      </div>
+      <div class="Ubuntu submit" id="lsubmit">Submit</div>
+      <div class="image-wrapper">
+        <div id="svg-container">
+        <svg id="player" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.42 106.92">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #ffe293;
+              }
+              .cls-2 {
+                fill: #ffdb73;
+                stroke: #1d1d1b;
+                stroke-miterlimit: 10;
+              }
+            </style>
+          </defs>
+          <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+              <circle class="cls-1" cx="49.61" cy="57.31" r="49.61"/>
+              <circle class="cls-2" cx="87.2" cy="21.97" r="17.72"/>
+              <circle class="cls-2" cx="19.53" cy="18.22" r="17.72"/>
+            </g>
+          </g>
+        </svg>
+        </div>
+      </div>
+      
+
+     
+   
+    </div>
+    
+    </div>
+    <div></div>
+  </div>
+    </div>
+
+  </div>
+
+  <div id="signupBtn" class="signupBtn ubuntufontsmall">
+    <h1>Sign-up</h1>
+  </div>
+  <div id="signupMenu" class="signupScreen"> 
+    <div id="loginBox">
+      <div id=closeSignup></div>
+      <h2 id="signupBtn" style="text-align: center;" class="ubuntufontsmall">Sign-up</h2>
+      <div class="input-wrapper">
+        <form action="" id="signup-form">
+          <div class="form-group">
+            <label class="Ubuntu" for="username">Username:</label>
+            <br>
+            <input type="text" name="susername" placeholder="username" id="susername" required>
+            <span id="username-error" class="error-message"></span>
+          </div>
+          <div class="form-group">
+            <label class="Ubuntu" for="password">Password:</label>
+            <br>
+            <input type="password" name="spassword" placeholder="password" id="spassword"  required>
+            <span id="password-error" class="error-message"></span>
+          </div>
+          <button type="submit" class="Ubuntu submit" id="submit">Submit</button>
+        </form>
+       <script>
+    // retrieve signup data from local storage
+    let signupData = JSON.parse(localStorage.getItem('signupData')) || [];
+
+    // handle login form submission
+    const loginForm = document.getElementById('login-form');
+    const loginBtn = document.getElementById('lsubmit');
+    loginBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('lusername').value;
+      const password = document.getElementById('lpassword').value;
+
+      // find user with matching username and password
+      const matchedUser = signupData.find(user => user.username === username && user.password === password);
+
+      if (matchedUser) {
+        console.log('Login successful');
+        window.alert('Login successful!');
+        document.getElementById('loginMenu').style.display = 'none'; // hide login menu
+        loginForm.reset();
+
+        const stats = document.getElementById('stats');
+        stats.style.display = 'block';
+        const playerName = document.getElementById('PlayerName');
+        playerName.textContent = username;
+        const usernameInput = document.getElementById('username-input');
+        usernameInput.textContent = username;
+        
+        // hide login and signup buttons
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signup-btn').style.display = 'none';
+      } else {
+        console.log('Incorrect username or password');
+        window.alert('Incorrect username or password!');
+      }
+    });
+
+    // handle signup form submission
+    const signupForm = document.getElementById('signup-form');
+    const signupBtn = document.getElementById('submit');
+    signupBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('susername').value;
+      const password = document.getElementById('spassword').value;
+
+      // check username length and uniqueness
+      const validUsername = /^[a-zA-Z0-9_]{1,9}$/.test(username);
+      const uniqueUsername = !signupData.some(user => user.username === username);
+      if (!validUsername) {
+        window.alert('Username must be 1-9 characters and only contain letters, numbers, and underscores');
+      } else if (!uniqueUsername) {
+        window.alert('That username is already taken');
+      } else {
+        // check password strength
+        const validPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password);
+        if (!validPassword) {
+          window.alert('Password must be at least 8 characters, contain a capital letter, a number, and a special character');
+        } else {
+          // add new user to signup data
+          signupData.push({username, password});
+          localStorage.setItem('signupData', JSON.stringify(signupData));
+
+          console.log('Signup successful');
+          window.alert('Signup successful!');
+
+          // reset form and hide it
+          signupForm.reset();
+          document.getElementById('signupMenu').style.display = 'none';
+        }
+      }
+    });
+  </script>
+  
+      </div>
+      <div class="image-wrapper">
+        <div id="svg-container">
+        <svg id="player" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.42 106.92">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #ffe293;
+              }
+              .cls-2 {
+                fill: #ffdb73;
+                stroke: #1d1d1b;
+                stroke-miterlimit: 10;
+              }
+            </style>
+          </defs>
+          <g id="Layer_2" data-name="Layer 2">
+            <g id="Layer_1-2" data-name="Layer 1">
+              <circle class="cls-1" cx="49.61" cy="57.31" r="49.61"/>
+              <circle class="cls-2" cx="87.2" cy="21.97" r="17.72"/>
+              <circle class="cls-2" cx="19.53" cy="18.22" r="17.72"/>
+            </g>
+          </g>
+        </svg>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    
+    </div>
+    
+  </div>
+    </div>
+
+  </div>
+  
+  <canvas id="game-canvas" class="hidden"></canvas>
+  <div id="playercount" class="center-box Ubuntu" style="font-size: 25px">
+    Player Count : 0
+  </div>
+
+  
+  <div id="play-menu" class="hidden play-menu">
+    
+    
+    <h1 style="margin-bottom: 0; font-size:150px" class="ubuntufont">ArenA.io</h1>
+    <h2 style="margin-top: 0; padding-top: 0;" class="ubuntufontsmall" >Welcome to the ArenA...</h2>
+   
+    
+    
+    
+    <h1 class="ubuntufontsmall glow" type="text" id="username-input" placeholder="Username">Challenger</h1>
+    <button id="play-button" class="ubuntufontsmall" style="font-size: 20px;"><b>Enter</b></button>
+  </div>
+  <div id="leaderboard" class="hidden">
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Score</th>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+    </table>
+  </div>
+  <div id="star-group" style="z-index: -9999;">
+    <div id='stars'></div>
+    <div id='stars2'></div>
+    <div id='stars3'></div>
+  </div>
+  
+  
+  <div id="disconnect-modal" class="hidden">
+    <div>
+      <h2>Disconnected from Server </h2>
+      <hr />
+      <button id="reconnect-button">RECONNECT</button>
+    </div>
+  </div>
+</body>
+</html>
+    
+</body>    
+</html>  
