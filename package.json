@@ -1,5 +1,5 @@
 {
-  "name": "io-game-from-scratch",
+  "name": "arenaio",
   "version": "1.0.0",
   "description": "",
   "main": "src/server/server.js",
@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=production node src/server/server.js",
     "test": "jest"
   },
-  "author": "Victor Zhou",
+  "author": "Godlike-ui",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.3",
